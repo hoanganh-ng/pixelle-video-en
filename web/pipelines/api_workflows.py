@@ -24,9 +24,9 @@ def workflow_source_label(source: str) -> str:
     """Human-facing label for workflow source selectors."""
     zh = get_language() == "zh_CN"
     labels = {
-        "selfhost": "本地 ComfyUI" if zh else "Local ComfyUI",
+        "selfhost": "Local ComfyUI" if zh else "Local ComfyUI",
         "runninghub": "RunningHub",
-        "api": "API 模型" if zh else "API models",
+        "api": "API models" if zh else "API models",
     }
     return labels.get(source, source)
 
@@ -34,12 +34,12 @@ def workflow_source_label(source: str) -> str:
 def workflow_source_help(subject: str | None = None) -> str:
     """Common help text for workflow/model source selectors."""
     zh = get_language() == "zh_CN"
-    subject_text = subject or ("当前步骤" if zh else "this step")
+    subject_text = subject or ("this step" if zh else "this step")
     if zh:
         return (
-            f"选择{subject_text}使用的模型服务来源："
-            "RunningHub 使用云端工作流；本地 ComfyUI 使用 selfhost 工作流；"
-            "API 调用直接请求模型供应商。选择后，下方列表只显示该来源下可用的工作流或模型。"
+            f"Choose the model service source for {subject_text}: "
+            "RunningHub uses cloud workflows; Local ComfyUI uses selfhost workflows; "
+            "API call directly requests model providers. The list below only shows workflows or models from the selected source."
         )
     return (
         f"Choose the model service source for {subject_text}: "
@@ -51,7 +51,7 @@ def workflow_source_help(subject: str | None = None) -> str:
 def workflow_select_help() -> str:
     """Common help text for workflow/model select boxes."""
     if get_language() == "zh_CN":
-        return "这里只显示上方所选模型服务来源下可用的工作流或模型。"
+        return "Only workflows or models from the selected model service source are shown here."
     return "Only workflows or models from the selected model service source are shown here."
 
 
@@ -177,14 +177,14 @@ def render_api_video_controls(
     adapter_abilities = set(workflow.get("adapter_ability_types") or [])
     params: dict[str, Any] = {}
 
-    title = "API 视频模型参数" if zh else "API video model options"
+    title = "API video model options" if zh else "API video model options"
     with st.expander(title, expanded=False):
-        ability_text = ", ".join(sorted(adapter_abilities)) or ("未标注" if zh else "unknown")
-        st.caption(("已接入能力：" if zh else "Adapter abilities: ") + ability_text)
+        ability_text = ", ".join(sorted(adapter_abilities)) or ("unknown" if zh else "unknown")
+        st.caption(("Adapter abilities: " if zh else "Adapter abilities: ") + ability_text)
 
         if not workflow.get("api_contract_verified", False):
             st.warning(
-                "这个模型的公开 API 数据契约尚未完全确认，只会传递最基础的图生视频参数。"
+                "This model's public API contract is not fully verified; only basic image-to-video parameters will be passed."
                 if zh
                 else "This model's public API contract is not fully verified; only basic image-to-video parameters will be passed."
             )
@@ -195,7 +195,7 @@ def render_api_video_controls(
         if show_duration:
             default_value = min(max(int(default_duration or min_duration), min_duration), max_duration)
             params["duration"] = st.slider(
-                "视频时长（秒）" if zh else "Duration (seconds)",
+                "Duration (seconds)" if zh else "Duration (seconds)",
                 min_value=min_duration,
                 max_value=max_duration,
                 value=default_value,
@@ -204,7 +204,7 @@ def render_api_video_controls(
             )
         else:
             st.caption(
-                f"视频时长将自动跟随每段旁白音频长度，并限制在模型支持范围 {min_duration}-{max_duration}s。"
+                f"Duration follows each scene's narration audio and is clamped to the model range {min_duration}-{max_duration}s."
                 if zh
                 else f"Duration follows each scene's narration audio and is clamped to the model range {min_duration}-{max_duration}s."
             )
@@ -212,7 +212,7 @@ def render_api_video_controls(
         resolutions = capabilities.get("resolutions") or []
         if resolutions:
             params["resolution"] = st.selectbox(
-                "分辨率" if zh else "Resolution",
+                "Resolution" if zh else "Resolution",
                 resolutions,
                 index=0,
                 key=f"{key_prefix}_api_resolution",
@@ -223,14 +223,14 @@ def render_api_video_controls(
             preferred_ratio = default_ratio or "9:16"
             default_ratio_index = ratios.index(preferred_ratio) if preferred_ratio in ratios else 0
             params["video_ratio"] = st.selectbox(
-                "画幅比例" if zh else "Aspect ratio",
+                "Aspect ratio" if zh else "Aspect ratio",
                 ratios,
                 index=default_ratio_index,
                 key=f"{key_prefix}_api_ratio",
             )
 
         negative_prompt = st.text_area(
-            "负向提示词（可选）" if zh else "Negative prompt (optional)",
+            "Negative prompt (optional)" if zh else "Negative prompt (optional)",
             value="",
             height=70,
             key=f"{key_prefix}_api_negative_prompt",
@@ -240,31 +240,31 @@ def render_api_video_controls(
 
         if workflow.get("api_contract_verified", False):
             params["watermark"] = st.checkbox(
-                "添加水印" if zh else "Add watermark",
+                "Add watermark" if zh else "Add watermark",
                 value=False,
                 key=f"{key_prefix}_api_watermark",
             )
 
         if workflow.get("provider") == "seedance" and workflow.get("api_contract_verified", False):
             params["generate_audio"] = st.checkbox(
-                "让模型生成原生音频" if zh else "Generate native audio",
+                "Generate native audio" if zh else "Generate native audio",
                 value=False,
                 key=f"{key_prefix}_api_generate_audio",
             )
 
         if workflow.get("provider") == "kling" and workflow.get("api_contract_verified", False):
             params["sound"] = "on" if st.checkbox(
-                "让模型生成原生音频" if zh else "Generate native audio",
+                "Generate native audio" if zh else "Generate native audio",
                 value=False,
                 key=f"{key_prefix}_api_kling_sound",
             ) else "off"
 
         if allow_audio_driven and "audio_driven_i2v" in adapter_abilities:
             params["use_narration_audio_as_driving_audio"] = st.checkbox(
-                "使用本场景旁白音频驱动画面" if zh else "Use narration audio as driving audio",
+                "Use narration audio as driving audio" if zh else "Use narration audio as driving audio",
                 value=False,
                 help=(
-                    "仅对已验证支持 driving_audio 的 API 模型生效。"
+                    "Only applies to verified API models that support driving_audio."
                     if zh
                     else "Only applies to verified API models that support driving_audio."
                 ),

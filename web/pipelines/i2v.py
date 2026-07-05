@@ -148,7 +148,7 @@ class ImageToVideoPipelineUI(PipelineUI):
             if not source_options:
                 source_options = ["runninghub"]
                 st.warning(
-                    "没有找到可用的图生视频工作流或 API 模型。"
+                    "No available image-to-video workflow or API model was found."
                     if get_language() == "zh_CN"
                     else "No available image-to-video workflow or API model was found."
                 )
@@ -158,18 +158,18 @@ class ImageToVideoPipelineUI(PipelineUI):
                 st.session_state.pop(source_key, None)
 
             workflow_source = st.radio(
-                "生成来源" if get_language() == "zh_CN" else "Generation source",
+                "Generation source" if get_language() == "zh_CN" else "Generation source",
                 source_options,
                 format_func=workflow_source_label,
                 horizontal=True,
                 key=source_key,
-                help=workflow_source_help("图生视频" if get_language() == "zh_CN" else "image-to-video"),
+                help=workflow_source_help("image-to-video" if get_language() == "zh_CN" else "image-to-video"),
             )
             
             i2v_workflows = list_i2v_workflows()
             if workflow_source != "api" and not i2v_workflows:
                 st.warning(
-                    "当前来源下没有图生视频工作流（需要 i2v_*.json）。"
+                    "No image-to-video workflow is available for this source (requires i2v_*.json)."
                     if get_language() == "zh_CN"
                     else "No image-to-video workflow is available for this source (requires i2v_*.json)."
                 )
@@ -293,7 +293,7 @@ class ImageToVideoPipelineUI(PipelineUI):
                                 task_id=task_id,
                                 video_path=media_result.url,
                                 pipeline="image_to_video",
-                                title="图生视频" if get_language() == "zh_CN" else "Image to Video",
+                                title="Image to Video" if get_language() == "zh_CN" else "Image to Video",
                                 input_params={
                                     "text": prompt,
                                     "prompt_text": prompt,
@@ -353,7 +353,7 @@ class ImageToVideoPipelineUI(PipelineUI):
                             task_id=task_id,
                             video_path=final_video_path,
                             pipeline="image_to_video",
-                            title="图生视频" if get_language() == "zh_CN" else "Image to Video",
+                            title="Image to Video" if get_language() == "zh_CN" else "Image to Video",
                             input_params={
                                 "text": prompt,
                                 "prompt_text": prompt,
@@ -394,7 +394,7 @@ class ImageToVideoPipelineUI(PipelineUI):
                             video_bytes = video_file.read()
                             video_filename = os.path.basename(final_video_path)
                             st.download_button(
-                                label="⬇️ 下载视频" if get_language() == "zh_CN" else "⬇️ Download Video",
+                                label="⬇️ Download Video" if get_language() == "zh_CN" else "⬇️ Download Video",
                                 data=video_bytes,
                                 file_name=video_filename,
                                 mime="video/mp4",

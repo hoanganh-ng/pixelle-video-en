@@ -46,7 +46,7 @@ def build_style_conversion_prompt(description: str) -> str:
         Formatted prompt
     
     Example:
-        >>> build_style_conversion_prompt("赛博朋克风格，霓虹灯，未来感")
+        >>> build_style_conversion_prompt("cyberpunk style, neon lights, futuristic")
         # Returns prompt that will convert to: "cyberpunk style, neon lights, futuristic..."
     """
     return STYLE_CONVERSION_PROMPT.format(description=description)

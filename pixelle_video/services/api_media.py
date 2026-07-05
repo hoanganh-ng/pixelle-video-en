@@ -600,16 +600,16 @@ class APIProviderMediaService:
             return prompt
 
         rewrite_instruction = f"""
-请将下面的视频生成提示词改写为更中性、安全、适合公开视频生成模型审核的画面描述。
+Rewrite the following video generation prompt into a more neutral, safe, and visually descriptive scene suitable for public video-generation model review.
 
-要求：
-1. 保留原本的积极含义、画面主题和视觉风格。
-2. 去掉可能触发审核的暴力、危险、恐惧、政治、成人、歧视、极端情绪、自伤、违法、攻击性表达。
-3. 不要提及“审核”“违规”“敏感词”等元信息。
-4. 只输出改写后的提示词，不要解释。
-5. 输出优先使用英文，画面描述要具体、平和、正向。
+Requirements:
+1. Preserve the original positive meaning, scene subject, and visual style.
+2. Remove content that may trigger review: violence, danger, fear, politics, adult content, discrimination, extreme emotions, self-harm, illegal activity, or aggressive expressions.
+3. Do not mention meta-information such as "review", "violation", or "sensitive words".
+4. Output only the rewritten prompt, with no explanation.
+5. Prefer English output. The scene description should be specific, calm, and positive.
 
-原提示词：
+Original prompt:
 {prompt}
 """.strip()
 
@@ -638,7 +638,7 @@ class APIProviderMediaService:
             cleaned = cleaned.strip("`").strip()
             if cleaned.lower().startswith(("text", "prompt", "english")):
                 cleaned = cleaned.split("\n", 1)[-1].strip()
-        for prefix in ("改写后的提示词：", "改写后：", "Prompt:", "Rewritten prompt:"):
+        for prefix in ("Rewritten prompt:", "Rewritten:", "Prompt:"):
             if cleaned.startswith(prefix):
                 cleaned = cleaned[len(prefix):].strip()
         return cleaned.strip().strip('"').strip("'")
@@ -647,15 +647,15 @@ class APIProviderMediaService:
         """Conservative fallback if the configured LLM is unavailable."""
         sanitized = prompt
         replacements = {
-            "害怕": "平静",
-            "恐惧": "沉思",
-            "危险": "未知",
-            "挣脱": "走向",
-            "崩溃": "调整",
-            "压迫": "压力",
-            "攻击": "互动",
-            "血": "红色",
-            "死亡": "离别",
+            "害怕": "calm",
+            "恐惧": "reflective",
+            "危险": "unknown",
+            "挣脱": "walking toward",
+            "崩溃": "adjusting",
+            "压迫": "stress",
+            "攻击": "interaction",
+            "血": "red",
+            "死亡": "farewell",
         }
         for source, target in replacements.items():
             sanitized = sanitized.replace(source, target)

@@ -196,7 +196,7 @@ class AssetBasedPipelineUI(PipelineUI):
             source_options = {
                 "runninghub": tr("asset_based.source.runninghub"),
                 "selfhost": tr("asset_based.source.selfhost"),
-                "api": "API 调用" if get_language() == "zh_CN" else "API call",
+                "api": "API call" if get_language() == "zh_CN" else "API call",
             }
             
             # Check if RunningHub API key is configured
@@ -252,14 +252,14 @@ class AssetBasedPipelineUI(PipelineUI):
                 st.session_state.pop("asset_source", None)
 
             source = st.radio(
-                "素材分析服务" if get_language() == "zh_CN" else "Asset analysis service",
+                "Asset analysis service" if get_language() == "zh_CN" else "Asset analysis service",
                 options=source_keys,
                 format_func=lambda x: source_options[x],
                 index=default_source_index,
                 horizontal=True,
                 key="asset_source",
                 label_visibility="visible",
-                help=workflow_source_help("素材分析" if get_language() == "zh_CN" else "asset analysis"),
+                help=workflow_source_help("asset analysis" if get_language() == "zh_CN" else "asset analysis"),
             )
 
             def build_analysis_workflows(source_name: str) -> list[dict]:
@@ -307,7 +307,7 @@ class AssetBasedPipelineUI(PipelineUI):
 
             if analysis_options:
                 selected_analysis = st.selectbox(
-                    "素材分析工作流/模型" if get_language() == "zh_CN" else "Asset analysis workflow/model",
+                    "Asset analysis workflow/model" if get_language() == "zh_CN" else "Asset analysis workflow/model",
                     analysis_options,
                     index=0,
                     key="asset_analysis_workflow",
@@ -316,7 +316,7 @@ class AssetBasedPipelineUI(PipelineUI):
                 selected_analysis_workflow = analysis_workflows[analysis_options.index(selected_analysis)]
             else:
                 st.warning(
-                    "当前服务没有可用的素材分析工作流/模型。"
+                    "No asset analysis workflow/model is available for the selected service."
                     if get_language() == "zh_CN"
                     else "No asset analysis workflow/model is available for the selected service."
                 )
@@ -325,13 +325,13 @@ class AssetBasedPipelineUI(PipelineUI):
             if source == "api":
                 if not has_api_analysis:
                     st.warning(
-                        "未配置可用于 VLM 素材分析的 API Key（DashScope/OpenAI/Gemini）。"
+                        "No API key configured for VLM asset analysis (DashScope/OpenAI/Gemini)."
                         if get_language() == "zh_CN"
                         else "No API key configured for VLM asset analysis (DashScope/OpenAI/Gemini)."
                     )
                 else:
                     st.info(
-                        "使用上方选择的 API VLM 模型分析上传素材，不依赖 RunningHub/ComfyUI。"
+                        "Use the selected API VLM model to analyze uploaded assets without RunningHub/ComfyUI."
                         if get_language() == "zh_CN"
                         else "Use the selected API VLM model to analyze uploaded assets without RunningHub/ComfyUI."
                     )
@@ -370,17 +370,17 @@ class AssetBasedPipelineUI(PipelineUI):
 
             def animation_source_label(value: str) -> str:
                 if value == "none":
-                    return "不启用" if get_language() == "zh_CN" else "Disabled"
+                    return "Disabled" if get_language() == "zh_CN" else "Disabled"
                 return workflow_source_label(value)
 
             animation_source = st.radio(
-                "素材动画服务" if get_language() == "zh_CN" else "Asset animation service",
+                "Asset animation service" if get_language() == "zh_CN" else "Asset animation service",
                 animation_source_options,
                 format_func=animation_source_label,
                 horizontal=True,
                 key="asset_animation_source",
                 help=(
-                    "选择是否把匹配到的图片素材动画化。不启用时保留原素材静态合成；API 模型会调用已验证的图生视频模型。"
+                    "Choose whether to animate matched image assets. Disabled keeps the original static asset composition; API models call verified image-to-video providers."
                     if get_language() == "zh_CN"
                     else "Choose whether to animate matched image assets. Disabled keeps the original static asset composition; API models call verified image-to-video providers."
                 ),
@@ -390,7 +390,7 @@ class AssetBasedPipelineUI(PipelineUI):
                 animation_workflows = api_video_workflows
                 animation_options = [wf["display_name"] for wf in animation_workflows]
                 selected_animation = st.selectbox(
-                    "素材动画工作流/模型" if get_language() == "zh_CN" else "Asset animation workflow/model",
+                    "Asset animation workflow/model" if get_language() == "zh_CN" else "Asset animation workflow/model",
                     animation_options,
                     index=0,
                     key="asset_animation_workflow",
@@ -568,7 +568,7 @@ class AssetBasedPipelineUI(PipelineUI):
                     # Execute pipeline with progress callback
                     if video_params.get("source") == "api" and not video_params.get("analysis_vlm_model"):
                         raise RuntimeError(
-                            "请先在素材分析服务中选择 API VLM 模型。"
+                            "Please select an API VLM model in the asset analysis service settings."
                             if get_language() == "zh_CN"
                             else "Please select an API VLM model in the asset analysis service settings."
                         )
@@ -624,7 +624,7 @@ class AssetBasedPipelineUI(PipelineUI):
                             video_bytes = video_file.read()
                             video_filename = os.path.basename(ctx.final_video_path)
                             st.download_button(
-                                label="⬇️ 下载视频" if get_language() == "zh_CN" else "⬇️ Download Video",
+                                label="⬇️ Download Video" if get_language() == "zh_CN" else "⬇️ Download Video",
                                 data=video_bytes,
                                 file_name=video_filename,
                                 mime="video/mp4",

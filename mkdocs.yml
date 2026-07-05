@@ -69,29 +69,29 @@ plugins:
           name: 中文
           build: true
           nav_translations:
-            Home: 首页
-            Getting Started: 快速开始
-            Installation: 安装
-            Quick Start: 快速入门
-            Configuration: 配置
-            User Guide: 用户指南
-            Web UI: Web 界面
-            API Usage: API 使用
-            Workflows: 工作流定制
-            Templates: 模板开发
-            Gallery: 示例库
-            Tutorials: 教程
-            Your First Video: 生成你的第一个视频
-            Custom Style: 自定义视觉风格
-            Voice Cloning: 声音克隆
-            Reference: 参考
-            API Overview: API 概览
-            Config Schema: 配置文件详解
-            Development: 开发指南
-            Architecture: 架构设计
-            Contributing: 贡献指南
-            FAQ: 常见问题
-            Troubleshooting: 故障排查
+            Home: Home
+            Getting Started: Getting Started
+            Installation: Installation
+            Quick Start: Quick Start
+            Configuration: Configuration
+            User Guide: User Guide
+            Web UI: Web UI
+            API Usage: API Usage
+            Workflows: Workflows
+            Templates: Templates
+            Gallery: Gallery
+            Tutorials: Tutorials
+            Your First Video: Your First Video
+            Custom Style: Custom Style
+            Voice Cloning: Voice Cloning
+            Reference: Reference
+            API Overview: API Overview
+            Config Schema: Config Schema
+            Development: Development
+            Architecture: Architecture
+            Contributing: Contributing
+            FAQ: FAQ
+            Troubleshooting: Troubleshooting
   - git-revision-date-localized:
       enable_creation_date: true
       type: datetime

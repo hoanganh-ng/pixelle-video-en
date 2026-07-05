@@ -192,12 +192,12 @@ class DigitalHumanPipelineUI(PipelineUI):
             if st.session_state.get("digital_human_image_service_source") not in image_source_options:
                 st.session_state.pop("digital_human_image_service_source", None)
             image_service_source = st.radio(
-                "前置图片生成服务" if get_language() == "zh_CN" else "Pre-image generation service",
+                "Pre-image generation service" if get_language() == "zh_CN" else "Pre-image generation service",
                 image_source_options,
                 format_func=lambda x: source_options[x],
                 horizontal=True,
                 key="digital_human_image_service_source",
-                help=workflow_source_help("前置图片生成" if get_language() == "zh_CN" else "pre-image generation"),
+                help=workflow_source_help("pre-image generation" if get_language() == "zh_CN" else "pre-image generation"),
             )
 
             image_workflows = []
@@ -211,7 +211,7 @@ class DigitalHumanPipelineUI(PipelineUI):
             elif image_service_source == "api":
                 if not api_image_workflows:
                     st.warning(
-                        "没有找到 API 图片模型，请先配置图像模型提供商。"
+                        "No API image model found. Configure an image provider first."
                         if get_language() == "zh_CN"
                         else "No API image model found. Configure an image provider first."
                     )
@@ -220,7 +220,7 @@ class DigitalHumanPipelineUI(PipelineUI):
 
             image_options = [wf["display_name"] for wf in image_workflows]
             selected_image_workflow = st.selectbox(
-                "前置图片工作流/模型" if get_language() == "zh_CN" else "Pre-image workflow/model",
+                "Pre-image workflow/model" if get_language() == "zh_CN" else "Pre-image workflow/model",
                 image_options if image_options else ["No workflow/model available"],
                 index=0,
                 key="digital_human_image_workflow",
@@ -255,12 +255,12 @@ class DigitalHumanPipelineUI(PipelineUI):
             if st.session_state.get("digital_human_video_service_source") not in video_source_options:
                 st.session_state.pop("digital_human_video_service_source", None)
             video_service_source = st.radio(
-                "口播视频合成服务" if get_language() == "zh_CN" else "Talking-video synthesis service",
+                "Talking-video synthesis service" if get_language() == "zh_CN" else "Talking-video synthesis service",
                 video_source_options,
                 format_func=lambda x: source_options[x],
                 horizontal=True,
                 key="digital_human_video_service_source",
-                help=workflow_source_help("口播视频合成" if get_language() == "zh_CN" else "talking-video synthesis"),
+                help=workflow_source_help("talking-video synthesis" if get_language() == "zh_CN" else "talking-video synthesis"),
             )
 
             video_workflows = []
@@ -274,7 +274,7 @@ class DigitalHumanPipelineUI(PipelineUI):
             elif video_service_source == "api":
                 if not api_video_workflows:
                     st.warning(
-                        "没有找到已验证的 API 参考生视频模型，请先配置 DashScope 等提供商。"
+                        "No verified API reference-to-video model found. Configure a provider first."
                         if get_language() == "zh_CN"
                         else "No verified API reference-to-video model found. Configure a provider first."
                     )
@@ -283,7 +283,7 @@ class DigitalHumanPipelineUI(PipelineUI):
 
             video_options = [wf["display_name"] for wf in video_workflows]
             selected_video_workflow = st.selectbox(
-                "口播视频工作流/模型" if get_language() == "zh_CN" else "Talking-video workflow/model",
+                "Talking-video workflow/model" if get_language() == "zh_CN" else "Talking-video workflow/model",
                 video_options if video_options else ["No workflow/model available"],
                 index=0,
                 key="digital_human_video_workflow",
@@ -310,7 +310,7 @@ class DigitalHumanPipelineUI(PipelineUI):
             if missing_workflows:
                 st.warning(
                     (
-                        "当前选择缺少数字人口播工作流文件："
+                        "The current selection is missing digital-human workflow files: "
                         + "、".join(missing_workflows)
                     )
                     if get_language() == "zh_CN"
@@ -442,7 +442,7 @@ class DigitalHumanPipelineUI(PipelineUI):
             logger.info(f"🔧 The obtained TTS parameters:")
             logger.info(f"  - tts_voice: {tts_voice}")
             logger.info(f"  - tts_speed: {tts_speed}")
-            logger.info(f"  - video_params中的tts_voice: {video_params.get('tts_voice', 'NOT_FOUND')}")
+            logger.info(f"  - tts_voice in video_params: {video_params.get('tts_voice', 'NOT_FOUND')}")
             logger.info(f"  - video_params: {video_params}")
             
             # Validation
@@ -552,17 +552,17 @@ class DigitalHumanPipelineUI(PipelineUI):
                                 reference_image_paths.append(goods_assets[0])
 
                             subject_prompt = (
-                                "参考图1中的人物面对镜头自然口播。"
+                                "The person in reference image 1 speaks naturally to camera."
                                 if get_language() == "zh_CN"
                                 else "The person in reference image 1 speaks naturally to camera."
                             )
                             if mode == "digital" and goods_assets:
                                 subject_prompt += (
-                                    "结合参考图2中的商品，生成竖屏商业口播视频。"
+                                    "Use the product in reference image 2 and create a vertical product-promotion talking video."
                                     if get_language() == "zh_CN"
                                     else "Use the product in reference image 2 and create a vertical product-promotion talking video."
                                 )
-                            prompt = f"{subject_prompt} 口播文案：{text}"
+                            prompt = f"{subject_prompt} Narration: {text}"
 
                             final_video_path = os.path.join(task_dir, "final.mp4")
                             duration = int(api_video_params.pop("duration", 5))
@@ -593,8 +593,8 @@ class DigitalHumanPipelineUI(PipelineUI):
                             else:
                                 generated_text = await pixelle_video.llm(
                                     prompt=(
-                                        f"请为商品“{goods_title}”写一段适合数字人口播短视频的中文推广文案。"
-                                        "要求自然、有吸引力，控制在80字以内，只输出文案正文。"
+                                        f"Please write a short Chinese promotional script (within 80 characters) suitable for a digital-human talking video for the product \"{goods_title}\". "
+                                        "The script should sound natural and appealing. Output only the script body."
                                     ),
                                     temperature=0.7,
                                     max_tokens=300,
@@ -807,8 +807,8 @@ class DigitalHumanPipelineUI(PipelineUI):
                                     generated_image_url = media_result.url
                                     generated_text = await pixelle_video.llm(
                                         prompt=(
-                                            f"请为商品“{goods_title}”写一段适合数字人口播短视频的中文推广文案。"
-                                            "要求自然、有吸引力，控制在80字以内，只输出文案正文。"
+                                            f"Please write a short Chinese promotional script (within 80 characters) suitable for a digital-human talking video for the product \"{goods_title}\". "
+                                            "The script should sound natural and appealing. Output only the script body."
                                         ),
                                         temperature=0.7,
                                         max_tokens=300,
@@ -899,7 +899,7 @@ class DigitalHumanPipelineUI(PipelineUI):
                         task_id=Path(final_video_path).parent.name,
                         video_path=final_video_path,
                         pipeline="digital_human",
-                        title="数字人口播" if get_language() == "zh_CN" else "Digital Human",
+                        title="Digital Human" if get_language() == "zh_CN" else "Digital Human",
                         input_params={
                             "text": goods_text or goods_title,
                             "mode": mode,
@@ -943,7 +943,7 @@ class DigitalHumanPipelineUI(PipelineUI):
                             video_bytes = video_file.read()
                             video_filename = os.path.basename(final_video_path)
                             st.download_button(
-                                label="⬇️ 下载视频" if get_language() == "zh_CN" else "⬇️ Download Video",
+                                label="⬇️ Download Video" if get_language() == "zh_CN" else "⬇️ Download Video",
                                 data=video_bytes,
                                 file_name=video_filename,
                                 mime="video/mp4",

@@ -1,7 +1,7 @@
 {
   "3": {
     "inputs": {
-      "text": "床前明月光，疑是地上霜。"
+      "text": "The moonlight before my bed, Could it be frost upon the ground?"
     },
     "class_type": "Text _O",
     "_meta": {
@@ -52,7 +52,7 @@
   },
   "12": {
     "inputs": {
-      "audio": "小裴钱.wav",
+      "audio": "xiaopeiqian.wav",
       "start_time": 0,
       "duration": 0
     },

@@ -218,7 +218,7 @@ class ActionTransferPipelineUI(PipelineUI):
             if not source_options:
                 source_options = ["runninghub"]
                 st.warning(
-                    "没有找到可用的动作迁移工作流或 API 模型。"
+                    "No available action-transfer workflow or API model was found."
                     if get_language() == "zh_CN"
                     else "No available action-transfer workflow or API model was found."
                 )
@@ -228,24 +228,24 @@ class ActionTransferPipelineUI(PipelineUI):
                 st.session_state.pop(source_key, None)
 
             workflow_source = st.radio(
-                "生成来源" if get_language() == "zh_CN" else "Generation source",
+                "Generation source" if get_language() == "zh_CN" else "Generation source",
                 source_options,
                 format_func=workflow_source_label,
                 horizontal=True,
                 key=source_key,
-                help=workflow_source_help("动作迁移" if get_language() == "zh_CN" else "action transfer"),
+                help=workflow_source_help("action transfer" if get_language() == "zh_CN" else "action transfer"),
             )
             
             transfer_workflows = list_action_transfer_workflows()
             if workflow_source != "api" and not transfer_workflows:
                 st.warning(
-                    "当前来源下没有动作迁移工作流（需要 af_*.json）。"
+                    "No action-transfer workflow is available for this source (requires af_*.json)."
                     if get_language() == "zh_CN"
                     else "No action-transfer workflow is available for this source (requires af_*.json)."
                 )
             if workflow_source == "api" and not transfer_workflows:
                 st.caption(
-                    "当前已接入的 API 视频模型没有已验证的动作迁移数据契约，暂不展示 API 模型。"
+                    "No verified API action-transfer contract is available yet, so API video models are hidden here."
                     if get_language() == "zh_CN"
                     else "No verified API action-transfer contract is available yet, so API video models are hidden here."
                 )
@@ -386,7 +386,7 @@ class ActionTransferPipelineUI(PipelineUI):
                                 task_id=task_id,
                                 video_path=media_result.url,
                                 pipeline="action_transfer",
-                                title="动作迁移" if get_language() == "zh_CN" else "Action Transfer",
+                                title="Action Transfer" if get_language() == "zh_CN" else "Action Transfer",
                                 input_params={
                                     "text": prompt,
                                     "prompt_text": prompt,
@@ -450,7 +450,7 @@ class ActionTransferPipelineUI(PipelineUI):
                             task_id=task_id,
                             video_path=final_video_path,
                             pipeline="action_transfer",
-                            title="动作迁移" if get_language() == "zh_CN" else "Action Transfer",
+                            title="Action Transfer" if get_language() == "zh_CN" else "Action Transfer",
                             input_params={
                                 "text": prompt,
                                 "prompt_text": prompt,
@@ -493,7 +493,7 @@ class ActionTransferPipelineUI(PipelineUI):
                             video_bytes = video_file.read()
                             video_filename = os.path.basename(final_video_path)
                             st.download_button(
-                                label="⬇️ 下载视频" if get_language() == "zh_CN" else "⬇️ Download Video",
+                                label="⬇️ Download Video" if get_language() == "zh_CN" else "⬇️ Download Video",
                                 data=video_bytes,
                                 file_name=video_filename,
                                 mime="video/mp4",

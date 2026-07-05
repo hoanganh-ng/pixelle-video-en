@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="template:media-width" content="1024">
     <meta name="template:media-height" content="1024">
     <meta name="viewport" content="width=1920, height=1080">
-    <title>全屏图片 - 1920x1080</title>
-    <!-- Google Fonts - 中文字体 -->
+    <title>Fullscreen Image - 1920x1080</title>
+    <!-- Google Fonts - Chinese Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -32,13 +32,13 @@
             color: #fff;
             position: relative;
             background: transparent;
-            /* 移除黑色背景 */
+            /* Remove black background */
             background-image: url("{{image}}");
             background-size: cover;
             background-position: center;
         }
 
-        /* 背景使用图片并做模糊处理，完全覆盖整个页面 */
+        /* Background uses image with blur, fully covering the entire page */
         .bg {
             position: relative;
             width: 100%;
@@ -67,17 +67,17 @@
                 2px -2px 0 #000,
                 -2px 2px 0 #000,
                 2px 2px 0 #000;
-            /* 使用 Ma Shan Zheng 毛笔字体 */
+            /* Use Ma Shan Zheng brush font */
             font-family: 'Ma Shan Zheng', 'PingFang SC', 'Source Han Sans', 'Microsoft YaHei', cursive;
             letter-spacing: 4px;
         }
 
-        /* 底部字幕覆盖在图片底部 */
+        /* Bottom subtitle overlaid on image bottom */
         .text {
             position: absolute;
             bottom: 170px;
             width: 100%;
-            /* 稍微调整以适应全宽图片 */
+            /* Slight adjustment for full-width image */
             padding: 0 60px;
             text-align: center;
             font-size: 54px;

@@ -27,7 +27,7 @@
             overflow: hidden;
         }
 
-        /* 1. Background Media Layer (背景媒体层) 
+        /* 1. Background Media Layer
            - For image assets: displays the image
            - For video assets: hidden (video is composited in later step)
         */
@@ -52,7 +52,7 @@
             display: none;
         }
 
-        /* 2. Gradient Overlay (渐变遮罩) 
+        /* 2. Gradient Overlay
            Ensures text readability regardless of background brightness
            Top: Darker for Title
            Middle: Transparent for Media visibility
@@ -72,7 +72,7 @@
                     rgba(0, 0, 0, 0.8) 100%);
         }
 
-        /* 3. Content Layer (内容层) */
+        /* 3. Content Layer */
         .content-layer {
             position: relative;
             z-index: 2;

@@ -308,9 +308,9 @@ def render_advanced_settings():
         }
 
         with st.container(border=True):
-            st.markdown("**🧩 API 媒体模型**" if zh else "**🧩 API Media Models**")
+            st.markdown("**🧩 API Media Models**" if zh else "**🧩 API Media Models**")
             st.caption(
-                "用于直连图像/视频模型，不影响上方 LLM 与 ComfyUI/RunningHub 配置。"
+                "Used for direct image/video model calls. This does not affect the LLM or ComfyUI/RunningHub settings above."
                 if zh
                 else "Used for direct image/video model calls. This does not affect the LLM or ComfyUI/RunningHub settings above."
             )
@@ -318,10 +318,10 @@ def render_advanced_settings():
             common_col, proxy_col = st.columns(2)
             with common_col:
                 api_print_model_input = st.checkbox(
-                    "打印模型请求参数" if zh else "Print model request parameters",
+                    "Print model request parameters" if zh else "Print model request parameters",
                     value=bool(common_cfg.get("print_model_input", False)),
                     help=(
-                        "调试用。开启后会在终端打印发送给图像/视频模型的 prompt、模型名和输入文件路径。"
+                        "For debugging. Prints prompts, model names and input file paths sent to image/video models."
                         if zh
                         else "For debugging. Prints prompts, model names and input file paths sent to image/video models."
                     ),
@@ -329,11 +329,11 @@ def render_advanced_settings():
                 )
             with proxy_col:
                 api_local_proxy = st.text_input(
-                    "本地代理（可选）" if zh else "Local proxy (optional)",
+                    "Local proxy (optional)" if zh else "Local proxy (optional)",
                     value=common_cfg.get("local_proxy", ""),
                     placeholder="http://127.0.0.1:9090",
                     help=(
-                        "仅部分提供商会使用，例如 OpenAI 图像模型。留空表示不使用代理。"
+                        "Only used by some providers, such as OpenAI image models. Leave blank to disable."
                         if zh
                         else "Only used by some providers, such as OpenAI image models. Leave blank to disable."
                     ),
@@ -346,7 +346,7 @@ def render_advanced_settings():
             with provider_col1:
                 st.markdown("**OpenAI / GPT Image**")
                 api_openai_use_proxy = st.checkbox(
-                    "OpenAI 启用代理" if zh else "Use proxy for OpenAI",
+                    "Use proxy for OpenAI" if zh else "Use proxy for OpenAI",
                     value=bool(openai_cfg.get("use_proxy", False)),
                     key="api_media_openai_use_proxy",
                 )
@@ -365,7 +365,7 @@ def render_advanced_settings():
 
                 st.markdown("**DashScope / Wan / HappyHorse**")
                 api_dashscope_use_proxy = st.checkbox(
-                    "DashScope 启用代理" if zh else "Use proxy for DashScope",
+                    "Use proxy for DashScope" if zh else "Use proxy for DashScope",
                     value=bool(dashscope_cfg.get("use_proxy", False)),
                     key="api_media_dashscope_use_proxy",
                 )
@@ -385,7 +385,7 @@ def render_advanced_settings():
             with provider_col2:
                 st.markdown("**Volcengine ARK / Seedream / Seedance**")
                 api_ark_use_proxy = st.checkbox(
-                    "ARK 启用代理" if zh else "Use proxy for ARK",
+                    "Use proxy for ARK" if zh else "Use proxy for ARK",
                     value=bool(ark_cfg.get("use_proxy", False)),
                     key="api_media_ark_use_proxy",
                 )
@@ -402,9 +402,9 @@ def render_advanced_settings():
                     key="api_media_ark_base_url",
                 )
 
-                st.markdown("**Kling AI / 可灵**")
+                st.markdown("**Kling AI**")
                 api_kling_use_proxy = st.checkbox(
-                    "Kling 启用代理" if zh else "Use proxy for Kling",
+                    "Use proxy for Kling" if zh else "Use proxy for Kling",
                     value=bool(kling_cfg.get("use_proxy", False)),
                     key="api_media_kling_use_proxy",
                 )

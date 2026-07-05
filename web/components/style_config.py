@@ -200,7 +200,7 @@ def render_style_config(pixelle_video):
             # Preview text input
             preview_text = st.text_input(
                 tr("tts.preview_text"),
-                value="大家好，这是一段测试语音。",
+                value="Hello everyone, this is a test voice.",
                 placeholder=tr("tts.preview_text_placeholder"),
                 key="tts_preview_text"
             )
@@ -728,13 +728,13 @@ def render_style_config(pixelle_video):
                     break
             source_key = "standard_video_workflow_source" if template_media_type == "video" else "standard_image_workflow_source"
             workflow_source = st.radio(
-                "生成来源" if get_language() == "zh_CN" else "Generation source",
+                "Generation source" if get_language() == "zh_CN" else "Generation source",
                 source_options,
                 index=default_source_index,
                 format_func=workflow_source_label,
                 horizontal=True,
                 key=source_key,
-                help=workflow_source_help("快速创作媒体生成" if get_language() == "zh_CN" else "Quick Create media generation"),
+                help=workflow_source_help("Quick Create media generation" if get_language() == "zh_CN" else "Quick Create media generation"),
             )
 
             if workflow_source == "api":
@@ -771,7 +771,7 @@ def render_style_config(pixelle_video):
                 default_workflow_index = workflow_keys.index(saved_workflow)
         
             workflow_display = st.selectbox(
-                "Workflow" if workflow_source != "api" else ("API 模型" if get_language() == "zh_CN" else "API model"),
+                "Workflow" if workflow_source != "api" else ("API model" if get_language() == "zh_CN" else "API model"),
                 workflow_options if workflow_options else ["No workflows found"],
                 index=default_workflow_index,
                 label_visibility="visible",
@@ -789,13 +789,13 @@ def render_style_config(pixelle_video):
                 workflow_info = None
                 if workflow_source == "api" and template_media_type == "video":
                     st.warning(
-                        "没有找到已验证的 API 文生视频模型，请先配置 DashScope/Seedance 等提供商，或切换到本地/RunningHub 工作流。"
+                        "No verified API text-to-video model found. Configure a provider or switch to local/RunningHub workflows."
                         if get_language() == "zh_CN"
                         else "No verified API text-to-video model found. Configure a provider or switch to local/RunningHub workflows."
                     )
                 else:
                     st.warning(
-                        "当前来源下没有可用工作流。"
+                        "No workflow is available for the selected source."
                         if get_language() == "zh_CN"
                         else "No workflow is available for the selected source."
                     )
@@ -859,7 +859,7 @@ def render_style_config(pixelle_video):
                 if st.button(preview_button_label, key="preview_style", use_container_width=True):
                     if not workflow_key:
                         st.error(
-                            "请先选择可用的工作流或模型。"
+                            "Please select an available workflow or model first."
                             if get_language() == "zh_CN"
                             else "Please select an available workflow or model first."
                         )

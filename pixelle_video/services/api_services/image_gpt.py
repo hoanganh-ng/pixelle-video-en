@@ -12,10 +12,10 @@ except ImportError:
 
 class ImageGPT:
     """
-    OpenAI 图片生成客户端
-    支持模型：
-        - sora_image → Images API
-        - gpt-image-2 → Responses API
+    OpenAI image generation client
+    Supported models:
+        - sora_image -> Images API
+        - gpt-image-2 -> Responses API
     """
     def __init__(self,
                  api_key: str = None,
@@ -23,10 +23,10 @@ class ImageGPT:
                  local_proxy: str = None,
                  timeout: float = 300.0):
         """
-        OpenAI 图片生成客户端
+        OpenAI image generation client
         :param api_key: API Key
-        :param base_url: 自定义 Base URL（如果传入，则不使用本地代理）
-        :param timeout: 超时时间
+        :param base_url: Custom Base URL (if provided, the local proxy is not used)
+        :param timeout: Request timeout in seconds
         """
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.timeout = timeout
@@ -47,7 +47,7 @@ class ImageGPT:
         self.image_processor = ImageProcessor(local_proxy=local_proxy)
 
     def _encode_image_to_base64(self, image_path: str) -> str:
-        """将本地图片转换为 Base64 编码"""
+        """Convert a local image to a Base64-encoded string."""
         if not image_path or not os.path.exists(image_path):
             return image_path
         
@@ -67,22 +67,22 @@ class ImageGPT:
         """Generate a single image, download it, and return the local file path.
 
         Args:
-            prompt: 图片描述提示词
-            size: 图片尺寸
-            quality: 图片质量
-            model: 模型名称 (sora_image / gpt-image-2)
-            save_dir: 保存目录（不传则返回 URL 或 base64）
-            image_urls: 参考图片 URL 列表（仅 gpt-image-2 支持）
+            prompt: Text prompt describing the image.
+            size: Image size (e.g., "1024x1024").
+            quality: Image quality ("standard" / "high" / etc.).
+            model: Model name (sora_image / gpt-image-2).
+            save_dir: Directory to save the file (omit to return the URL or base64).
+            image_urls: Reference image URL list (only gpt-image-2 supports this).
         """
 
         attempts = 0
         last_error = None
         
-        # 处理参考图片
+        # Process reference images
         extra_body = {}
         if image_urls and isinstance(image_urls, list) and len(image_urls) > 0:
-            # 中转站通常支持通过 extra_body 传递 image_url 或 ref_image
-            # 这里我们将第一张图作为参考图
+            # Relays typically accept image_url or ref_image via extra_body.
+            # We use the first images as the reference set.
             ref_images = [self._encode_image_to_base64(image_urls[i]) for i in range(min(len(image_urls), 6))]
             extra_body = {"image_url": ref_images}
 
@@ -96,14 +96,14 @@ class ImageGPT:
                     n=1,
                     extra_body=extra_body
                 )
-                
+
                 if not response or not response.data:
-                    raise RuntimeError("OpenAI API 返回数据为空")
+                    raise RuntimeError("OpenAI API returned empty data")
 
                 img_data = response.data[0]
                 file_path = None
 
-                # 1. 处理 Base64 格式 (中转站常用)
+                # 1. Handle Base64 format (commonly used by relays)
                 if hasattr(img_data, 'b64_json') and img_data.b64_json:
                     if save_dir:
                         os.makedirs(save_dir, exist_ok=True)
@@ -114,7 +114,7 @@ class ImageGPT:
                         return file_path
                     return img_data.b64_json
 
-                # 2. 处理 URL 格式
+                # 2. Handle URL format
                 elif hasattr(img_data, 'url') and img_data.url:
                     url = img_data.url
                     if save_dir:
@@ -124,8 +124,8 @@ class ImageGPT:
                         if self.image_processor.download_image(url, file_path):
                             return file_path
                         return url
-                
-                raise RuntimeError("未在响应中找到 url 或 b64_json")
+
+                raise RuntimeError("Did not find url or b64_json in response")
             except Exception as e:
                 last_error = e
                 msg = str(e)
@@ -156,15 +156,15 @@ if __name__ == "__main__":
     api_key = Config.OPENAI_API_KEY
     base_url = Config.OPENAI_BASE_URL
     if not api_key:
-        print("✗ OPENAI_API_KEY 未设置，跳过")
+        print("✗ OPENAI_API_KEY not set, skipping")
         sys.exit(1)
-    print("=== GPT 图片生成测试 ===")
+    print("=== GPT Image Generation Test ===")
     print(f"  API Key: {api_key[:6]}***")
     print(f"  Base URL: {base_url}")
 
 
-    # 文生图
-    print("\n=== GPT 文生图可用性测试 ===")
+    # Text-to-image
+    print("\n=== GPT Text-to-Image Availability Test ===")
     img_prompt = "A cute orange cat lying on a sunny windowsill, watercolor style"
     img_path = ""
     client = ImageGPT(api_key=api_key, base_url=Config.OPENAI_BASE_URL, local_proxy=Config.LOCAL_PROXY)
@@ -179,13 +179,13 @@ if __name__ == "__main__":
             path = client.generate_image(prompt=img_prompt, size="1024x1024",
                                                 model=model, save_dir=save_dir)
             elapsed = time.time() - t0
-            print(f"✓ 生成成功 ({elapsed:.1f}s): {path}")
+            print(f"✓ Generation succeeded ({elapsed:.1f}s): {path}")
         except Exception as e:
             elapsed = time.time() - t0
-            print(f"✗ 失败 ({elapsed:.1f}s): {e}")
+            print(f"✗ Failed ({elapsed:.1f}s): {e}")
 
-    # 图生图
-    print("\n=== GPT 图生图可用性测试 ===")
+    # Image-to-image
+    print("\n=== GPT Image-to-Image Availability Test ===")
     img_prompt = "Turn this cat into a cute cartoon character with big eyes and a playful expression"
     img_path = "code/result/image/test_avail/test_input.jpg"
     for model in MODELS:
@@ -199,7 +199,7 @@ if __name__ == "__main__":
             path = client.generate_image(prompt=img_prompt, size="1024x1024",
                                                 model=model, save_dir=save_dir, image_urls=[img_path])
             elapsed = time.time() - t0
-            print(f"✓ 生成成功 ({elapsed:.1f}s): {path}")
+            print(f"✓ Generation succeeded ({elapsed:.1f}s): {path}")
         except Exception as e:
             elapsed = time.time() - t0
-            print(f"✗ 失败 ({elapsed:.1f}s): {e}") 
+            print(f"✗ Failed ({elapsed:.1f}s): {e}") 

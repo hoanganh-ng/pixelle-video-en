@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="template:media-width" content="1024">
     <meta name="template:media-height" content="1024">
     <meta name="viewport" content="width=1080, height=1920">
-    <title>人生感悟 - 1080x1920</title>
-    <!-- Google Fonts - 中文字体 -->
+    <title>Life Insights - 1080x1920</title>
+    <!-- Google Fonts - Chinese Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
 
         body {
             font-family: 'Noto Sans SC', 'PingFang SC', 'Source Han Sans', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #F5F1E8; /* 浅色温暖的米黄色背景 */
+            background: #F5F1E8; /* Light warm beige background */
             position: relative;
             display: flex;
             flex-direction: column;
@@ -29,7 +29,7 @@
             overflow: hidden;
         }
 
-        /* 背景花纹装饰层 */
+        /* Background pattern decoration layer */
         .bg-pattern {
             position: absolute;
             top: 0;
@@ -41,7 +41,7 @@
             overflow: hidden;
         }
 
-        /* 点状纹理图案 */
+        /* Dot pattern texture */
         .dot-pattern {
             position: absolute;
             top: 0;
@@ -56,7 +56,7 @@
             opacity: 0.8;
         }
 
-        /* 网格纹理图案 */
+        /* Grid pattern texture */
         .grid-pattern {
             position: absolute;
             top: 0;
@@ -70,7 +70,7 @@
             opacity: 0.7;
         }
 
-        /* 装饰性圆形元素 */
+        /* Decorative circle elements */
         .decorative-circle {
             position: absolute;
             border-radius: 50%;
@@ -100,7 +100,7 @@
             transform: translateY(-50%);
         }
 
-        /* 波浪纹理（可选，更柔和） */
+        /* Wave pattern (optional, softer) */
         .wave-pattern {
             position: absolute;
             top: 0;
@@ -118,7 +118,7 @@
             opacity: 0.6;
         }
 
-        /* 顶部标题区域 */
+        /* Top title section */
         .header {
             margin-top: 200px;
             text-align: center;
@@ -130,12 +130,12 @@
             font-size: 80px;
             font-weight: 900;
             line-height: 1.4;
-            color: #1A1611; /* 深棕色/黑色 */
+            color: #1A1611; /* Dark brown/black */
             letter-spacing: 3px;
             text-shadow: 
                 1px 1px 0 rgba(0, 0, 0, 0.2),
                 2px 2px 2px rgba(0, 0, 0, 0.15);
-            /* 模拟略微纹理效果 */
+            /* Simulate slight texture effect */
             background: linear-gradient(135deg, #1A1611 0%, #2C2416 50%, #1A1611 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -160,7 +160,7 @@
             z-index: 1;
         }
 
-        /* 底部文字区域 */
+        /* Bottom text section */
         .bottom-section {
             /* padding: 60px 80px 160px; */
             padding: 0 40px;
@@ -194,33 +194,33 @@
     </style>
 </head>
 <body>
-    <!-- 背景花纹层 -->
+    <!-- Background pattern layer -->
     <div class="bg-pattern">
-        <!-- 点状纹理 -->
+        <!-- Dot pattern -->
         <div class="dot-pattern"></div>
-        <!-- 网格纹理 -->
+        <!-- Grid pattern -->
         <div class="grid-pattern"></div>
-        <!-- 波浪纹理（可选，如需更柔和效果可取消注释） -->
+        <!-- Wave pattern (optional, uncomment for softer effect) -->
         <!-- <div class="wave-pattern"></div> -->
-        <!-- 装饰性圆形 -->
+        <!-- Decorative circles -->
         <div class="decorative-circle circle-1"></div>
         <div class="decorative-circle circle-2"></div>
         <div class="decorative-circle circle-3"></div>
     </div>
 
-    <!-- 顶部标题 -->
+    <!-- Top title -->
     <div class="header">
         <div class="title">{{title}}</div>
     </div>
 
-    <!-- 中央插图 -->
+    <!-- Center illustration -->
     <div class="content">
-        <img 
+        <img
             src="{{image}}"
         />
     </div>
 
-    <!-- 底部文字 -->
+    <!-- Bottom text -->
     <div class="bottom-section">
         <div class="content-text">{{text}}</div>
     </div>
